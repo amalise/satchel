@@ -1,21 +1,22 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static wagtailcore_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
 {% block extra_css %}
-
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-<link rel="stylesheet" href="{% static 'css/welcome_page.css' %}">
 {% endblock extra_css %}
 
 {% block content %}
-
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-{% include 'home/welcome_page.html' %}
-
+<section class="container">
+	<div class="row">
+		<div class="col">
+			<div class="jumbotron">
+				<h1 class="display-4">{{ page.hero_title }}</h1>
+				<p class="lead">{{ page.hero_subtitle }}</p>
+				<hr class="my-4" />
+				<a class="btn btn-primary btn-lg" href="{{ page.action_button_link.url }}" role="button">{{ page.action_button_text }}</a>
+			</div>
+		</div>
+	</div>
+</section>
 {% endblock content %}
