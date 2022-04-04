@@ -45,10 +45,12 @@ class BlogPage(Page):
     date = models.DateField('Article Date')
     intro = models.TextField('Introduction')
     body = RichTextField(blank = True)
+    featured = models.BooleanField(default = False)
 
     # ADMIN INTERFACE
     content_panels = Page.content_panels + [
         FieldPanel('date'),
+        FieldPanel('featured'),
         FieldPanel('intro'),
         FieldPanel('body', classname = 'full'),
     ]

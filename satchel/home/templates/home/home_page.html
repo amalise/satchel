@@ -8,15 +8,35 @@
 
 {% block content %}
 <section class="container">
-	<div class="row">
-		<div class="col">
-			<div class="jumbotron">
-				<h1 class="display-4">{{ page.hero_title }}</h1>
-				<p class="lead">{{ page.hero_subtitle }}</p>
-				<hr class="my-4" />
-				<a class="btn btn-primary btn-lg" href="{{ page.action_button_link.url }}" role="button">{{ page.action_button_text }}</a>
-			</div>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col">
+            <div class="jumbotron">
+                <h1 class="display-4">{{ page.hero_title }}</h1>
+                <p class="lead">{{ page.hero_subtitle }}</p>
+                <hr class="my-4" />
+                <a class="btn btn-primary btn-lg" href="{{ page.action_button_link.url }}" role="button">{{ page.action_button_text }}</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container">
+    <div class="row">
+        <div class="col">
+            <h2>Featured Articles</h2>
+            <div class="row">
+                {% for article in featured_articles %}
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ article.title }}</h5>
+                            <p class="card-text">{{ article.intro }}</p>
+                            <a href="{% pageurl article %}" class="btn btn-primary">Read Post</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock content %}

@@ -4,6 +4,8 @@ from wagtail.admin.edit_handlers import FieldPanel, PageChooserPanel
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
 
+from blog.models import BlogPage
+
 
 class HomePage(Page):
     # CLASS DATA
@@ -41,4 +43,10 @@ class HomePage(Page):
     ]
 
     # FUNCTION OVERRIDES
+    # Add list of featured posts
+    def get_context(self, request):
+        context = super().get_context(request)
+        featured_articles = BlogPage.objects.live().filter(featured = True)
+        context['featured_articles'] = featured_articles
+        return context
 
