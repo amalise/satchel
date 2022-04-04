@@ -10,6 +10,12 @@
 
             <div class="intro">{{ page.intro }}</div>
 
+            <section>
+                {% for block in page.main_content %}
+                    {% include_block block %}
+                {% endfor %}
+            </section>
+
             {{ page.body|richtext }}
 
             <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>

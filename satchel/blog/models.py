@@ -7,6 +7,9 @@ from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 
+from blocks.models import TitleBlock, SimpleRichTextBlock, ResponsiveImageBlock, CardBlock
+from blocks.models import RichTextImageBlock, CarouselBlock, FlushListBlock
+
 
 class BlogIndexPage(Page):
     # CLASS DATA
@@ -44,7 +47,15 @@ class BlogPage(Page):
     # CLASS DATA
     date = models.DateField('Article Date')
     intro = models.TextField('Introduction')
-    body = RichTextField(blank = True)
+    main_content = StreamField([
+        ('title', TitleBlock()),
+        ('richtext', SimpleRichTextBlock()),
+        ('responsive_image', ResponsiveImageBlock()),
+        ('card', CardBlock()),
+        ('text_with_image', RichTextImageBlock()),
+        ('carousel', CarouselBlock()),
+        ('flush_list', FlushListBlock()),
+    ], blank = True)
     featured = models.BooleanField(default = False)
 
     # ADMIN INTERFACE
@@ -52,5 +63,5 @@ class BlogPage(Page):
         FieldPanel('date'),
         FieldPanel('featured'),
         FieldPanel('intro'),
-        FieldPanel('body', classname = 'full'),
+        StreamFieldPanel('main_content'),
     ]

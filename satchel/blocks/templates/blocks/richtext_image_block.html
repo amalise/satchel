@@ -1,0 +1,19 @@
+{% load wagtailimages_tags %}
+{% image self original as img %}
+<div class="container">
+    <div class="row">
+        {% if self.position == "left" %}
+        <div class="col-4">
+            <img class="img-fluid" src="{{ img.url }}" alt="{{ img.alt }}">
+        </div>
+        {% endif %}
+        <div class="col-8">
+            {{ self.richtext }}
+        </div>
+        {% if self.position == "right" %}
+        <div class="col-4">
+            <img class="img-fluid" src="{{ img.url }}" alt="{{ img.alt }}">
+        </div>
+        {% endif %}
+    </div>
+</div>
