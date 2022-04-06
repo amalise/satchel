@@ -41,6 +41,7 @@ class HomePage(Page):
         FieldPanel('action_button_text'),
         PageChooserPanel('action_button_link'),
     ]
+    subpage_types = ['blog.BlogIndexPage', 'portfolio.PortfolioPage']
 
     # FUNCTION OVERRIDES
     # Add list of featured posts

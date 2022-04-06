@@ -1,9 +1,9 @@
-{% load wagtailimages_tags %}
-{% image self original as img %}
+{% load wagtailcore_tags wagtailimages_tags %}
 <div class="container">
     <div class="row">
         {% if self.position == "left" %}
         <div class="col-4">
+            {% image self.image original as img %}
             <img class="img-fluid" src="{{ img.url }}" alt="{{ img.alt }}">
         </div>
         {% endif %}
@@ -12,6 +12,7 @@
         </div>
         {% if self.position == "right" %}
         <div class="col-4">
+            {% image self.image original as img %}
             <img class="img-fluid" src="{{ img.url }}" alt="{{ img.alt }}">
         </div>
         {% endif %}

@@ -73,3 +73,14 @@ class FlushListBlock(blocks.StructBlock):
         icon = 'list-ul'
         template = 'blocks/flush_list_block.html'
 
+
+class TimelineBlock(blocks.StructBlock):
+    # CLASS DATA
+    title = blocks.CharBlock(max_length=100)
+    text = blocks.TextBlock()
+    date = blocks.DateBlock()
+
+    # ADMIN INTERFACE
+    class Meta:
+        icon = "placeholder"
+        template = "blocks/timeline_block.html"

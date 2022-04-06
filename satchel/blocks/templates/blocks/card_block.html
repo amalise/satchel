@@ -1,20 +1,13 @@
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
-<div id="carousel" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-        {% for sub_block in self %}
-        {% image sub_block.value original as carousel_img %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ carousel_img.url }}" class="d-block w-100" alt="{{ carousel_img.alt }}">
-        </div>
-        {% endfor %}
+<div class="card" style="max-width: 21rem;">
+    {% if self.image %}
+    {% image self.image original as img %}
+    <img src="{{ img.url }}" class="card-img-top" alt="{{ img.alt }}" />
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{ self.title }}</h5>
+        <p class="card-text">{{ self.body }}</p>
+        <a href="{% pageurl self.page_link }%" class="btn btn-primary">Learn More</a>
     </div>
-    <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
 </div>
