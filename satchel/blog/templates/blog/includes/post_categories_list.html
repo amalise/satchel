@@ -1,0 +1,17 @@
+<div class="card my-4">
+    <h5 class="card-header">Categories</h5>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="list-unstyled mb-0">
+{% if post_categories %}
+    <i class="fas fa-tag"></i>
+    {% for postpage_category in post_categories %}
+        <a href="#">{{ postpage_category.blog_category.name }}</a>
+    {% endfor %}
+{% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

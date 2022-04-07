@@ -15,6 +15,7 @@ urlpatterns = [
     path('documents/', include(wagtaildocs_urls)),
 
     path('search/', search_views.search, name='search'),
+    path('__debug__/', include('debug_toolbar.urls')),
 
 ]
 
