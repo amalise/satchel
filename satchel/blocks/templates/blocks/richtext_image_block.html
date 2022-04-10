@@ -1,0 +1,13 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="container">
+    <div class="row align-items-center {% if self.reverse %}flex-row-reverse{% endif %}">
+        <div class="col-md-5 col-lg-7 col-xlg-8 col-12">
+            {{ self.text|richtext }}
+        </div>
+        <div class="col-md-7 col-lg-5 col-xlg-4 col-12">
+            {% image self.image width-800 as img %}
+            <img class="img-fluid border" src="{{ img.url }}" alt="{{ img.alt }}">
+        </div>
+    </div>
+</div>

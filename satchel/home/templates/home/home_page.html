@@ -12,10 +12,16 @@ Delete the line below if you're just getting started and want to remove the welc
 {% endblock extra_css %}
 
 {% block content %}
+<section>
+    <div class="container">
+        <div class="row">
 
 {% comment %}
 Delete the line below if you're just getting started and want to remove the welcome screen!
 {% endcomment %}
 {% include 'home/welcome_page.html' %}
 
+        </div>
+    </div>
+</section>
 {% endblock content %}

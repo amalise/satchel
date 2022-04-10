@@ -31,15 +31,11 @@
         {% endblock %}
     </head>
 
-    <body class="{% block body_class %}{% endblock %}" style="padding-top: 3.5em; padding-bottom: 3em;">
+    <body class="{% block body_class %}{% endblock %}" style="padding-top: 3.5em; padding-bottom: 2em;">
         {% include 'includes/navbar.html' %}
         {% wagtailuserbar %}
 
-        <div class="container">
-            <div class="row">
-                {% block content %}{% endblock %}
-            </div>
-        </div>
+        {% block content %}{% endblock %}
 
         {% include 'includes/footer.html' %}
 

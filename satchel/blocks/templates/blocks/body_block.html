@@ -1,0 +1,7 @@
+{% load static wagtailcore_tags %}
+
+<secton>
+    {% for block in self %}
+        {% include_block block %}
+    {% endfor %}
+</secton>
