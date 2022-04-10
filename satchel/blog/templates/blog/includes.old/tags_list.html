@@ -2,9 +2,7 @@
     <h5 class="card-header">Tags</h5>
     <div class="card-body">
         {% for tag in tags %}
-            <a href="#">
-                <span class="badge badge-secondary">{{ tag }}</span>
-            </a>
+            <a href="#"><span class="badge bg-secondary">{{ tag }}</span></a>
         {% empty %}
             No tags yet
         {% endfor %}

@@ -13,16 +13,6 @@ def categories_list(context):
     }
 
 
-@register.inclusion_tag("blog/includes/post_categories_list.html", takes_context = True)
-def post_categories_list(context):
-    page = context["page"]
-    post_categories = page.categories.all()
-    return {
-        "request": context["request"],
-        "post_categories": post_categories,
-    }
-
-
 @register.inclusion_tag("blog/includes/tags_list.html", takes_context = True)
 def tags_list(context):
     tags = Tag.objects.all()
@@ -39,5 +29,15 @@ def post_tags_list(context):
     return {
         "request": context["request"],
         "post_tags": post_tags,
+    }
+
+
+@register.inclusion_tag("blog/includes/post_categories_list.html", takes_context = True)
+def post_categories_list(context):
+    page = context["page"]
+    post_categories = page.categories.all()
+    return {
+        "request": context["request"],
+        "post_categories": post_categories,
     }
 

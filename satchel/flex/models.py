@@ -1,13 +1,18 @@
 from django.db import models
+from wagtail.core.fields import RichTextField, StreamField
+
+from wagtail.core import blocks
+from wagtail.images.blocks import ImageChooserBlock
+from blocks.models import (
+    SimpleRichTextBlock,
+    RichTextImageBlock,
+)
 
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.core import blocks
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
-from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 
-from blocks.models import RichTextImageBlock, BodyBlock
+from wagtail.core.models import Page
+
 
 
 class FlexPage(Page):
@@ -25,7 +30,10 @@ class FlexPage(Page):
         help_text = 'Banner image for page header.',
         on_delete = models.SET_NULL,
     )
-    content = StreamField(BodyBlock(), blank = True)
+    content = StreamField([
+        ('paragraph', SimpleRichTextBlock()),
+        ('image_paragraph', RichTextImageBlock()),
+    ], blank = True)
 
     # ADMIN
     content_panels = Page.content_panels + [

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags blogapp_tags %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% for post in page.get_children.specific %}
+                    <div class="card mb-4">
+                        {% if post.header_image %}
+                            {% image post.header_image original as header_image %}
+                            <a href="{% pageurl post %}">
+                                <img src="{{ header_image.url }}" class="card-img-top">
+                            </a>
+                        {% endif %}
+
+                        <div class="card-body">
+                            <h2 class="card-title">
+                                <a href="{% pageurl post %}">{{ post.title }}</a>
+                            </h2>
+                            <p class="card-text">
+                                {{ post.description }}
+                            </p>
+                            <a href="{% pageurl post %}" class="btn btn-primary">Read more &rarr;</a>
+                        </div>
+
+                        <div class="card-footer text-muted">
+                            Posted on {{ post.last_published_at }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-4">
+                {% categories_list %}
+                {% tags_list %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

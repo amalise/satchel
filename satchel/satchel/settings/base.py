@@ -26,6 +26,9 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 INSTALLED_APPS = [
     'home',
     'search',
+    'snippets',
+    'categories',
+    'tags',
     'blocks',
     'flex',
     'blog',

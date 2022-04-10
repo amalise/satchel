@@ -38,12 +38,3 @@ class RichTextImageBlock(StructBlock):
         icon = 'doc-empty'
         template = 'blocks/richtext_image_block.html'
 
-
-class BodyBlock(StreamBlock):
-    paragraph = SimpleRichTextBlock()
-    image_paragraph = RichTextImageBlock()
-
-    # ADMIN
-    class Meta:
-        icon = 'doc-full'
-        template = 'blocks/body_block.html'
