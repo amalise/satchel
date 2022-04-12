@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+
+# __file__          this file's full path
+# os.path.abspath() just converts any symlinks to actual folders
+# PROJECT_DIR       the parent directory of the directory holding this file
+# BASE_DIR          the parent directory of PROJECT_DIR
+# i.e. BASE_DIR/PROJECT_DIR/settings/base.py
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
@@ -24,8 +30,14 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    'home',
-    'search',
+    'satchel.core',
+    'satchel.home',
+    'satchel.flex',
+    'satchel.form',
+    'satchel.person',
+    'satchel.blog',
+    'satchel.project',
+    'satchel.search',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -94,6 +106,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Password validation

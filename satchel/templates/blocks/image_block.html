@@ -1,0 +1,7 @@
+{% load wagtailimages_tags %}
+
+<figure>
+    {% image self.image original as img %}
+    <img class="img-fluid" src="{{ img.url }}" alt="{{ img.alt_text }}">
+    <figcaption>{{ self.caption }} - {{ self.attribution }}</figcaption>
+</figure>

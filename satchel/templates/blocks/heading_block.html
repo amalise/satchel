@@ -1,0 +1,8 @@
+{%   if self.size == 'h2' %}<h2>{{ self.text }}</h2>
+{% elif self.size == 'h3' %}<h3>{{ self.text }}</h3>
+{% elif self.size == 'h4' %}<h4>{{ self.text }}</h4>
+{% elif self.size == 'h5' %}<h5>{{ self.text }}</h5>
+{% elif self.size == 'h6' %}<h6>{{ self.text }}</h6>
+{% elif self.size == 'h7' %}<h7>{{ self.text }}</h7>
+{% else %}<p>{{ self.text }}</p>
+{% endif %}
