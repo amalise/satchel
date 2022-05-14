@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags mathfilters %}
+
+{% block page_header %}
+    {% include "include/page_header_hero.html" %}
+{% endblock %}
+
+{% block base_content %}
+<main class="container main">
+    <div class="row">
+        <div class="col">
+            {% for block in page.content %}
+                {% include_block block %}
+            {% endfor %}
+        </div>
+    </div>
+</main>
+<section class="container">
+    <div class="row">
+        <div class="col">
+            <h2>{{ page.feature_title }}</h2>
+            {% if page.feature_display == "card" %}
+                <div class="row">
+                    {% for block in page.feature_pages %}
+                        {% with childpage=block.value %}
+                            {% if forloop.counter0 < page.feature_limit %}
+                                <div class="col-{{ 12|intdiv:page.feature_limit }}">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ childpage.title }}</h5>
+                                            <p class="card-text">{{ childpage.intro }}</p>
+                                            <a href="{% pageurl childpage %}" class="btn btn-primary">Read post</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            {% elif feature_display == "list" %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

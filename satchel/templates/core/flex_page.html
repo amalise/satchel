@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block base_content %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <main class="main">
+                    {% for block in page.content %}
+                        {% include_block block %}
+                    {% endfor %}
+                </main>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -15,6 +15,7 @@ from wagtail.core.blocks import (
     TextBlock,
     URLBlock,
 )
+from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 
@@ -36,7 +37,7 @@ class HeadingBlock(StructBlock):
 
 
 class ParagraphBlock(StructBlock):
-    text = RichTextBlock()
+    text = RichTextBlock(required = True)
 
     class Meta:
         icon = 'pilcrow'
@@ -45,19 +46,20 @@ class ParagraphBlock(StructBlock):
 
 class ImageBlock(StructBlock):
     image = ImageChooserBlock(required = True)
-    alt_text = CharBlock(required = True)
-    caption = CharBlock(required = False)
-    attribution = TextBlock(required = False)
+    alt_text = TextBlock(required = True)
+    caption = TextBlock(required = False)
+    attribution = CharBlock(required = False)
 
     class Meta:
-        icon = 'image'
+        icon = 'image / picture'
         template = 'blocks/image_block.html'
 
 
 class QuoteBlock(StructBlock):
-    text = CharBlock()
-    attribution = TextBlock(required = True)
-    citation = URLBlock(required = False)
+    text = TextBlock(required = True)
+    attribution = CharBlock(required = True)
+    citation_text = CharBlock(required = False)
+    citation_link = URLBlock(required = False)
 
     class Meta:
         icon = 'openquote'
@@ -71,6 +73,14 @@ class ContentStreamBlock(StreamBlock):
     quote = QuoteBlock()
     embed = EmbedBlock(
         icon = 'view',
-        template = 'blocks/embed_block.html',
+        template = 'blocks/default_block.html',
     )
+
+
+class PageStreamBlock(StreamBlock):
+    page = PageChooserBlock()
+
+    class Meta:
+        icon = 'doc-full'
+        template = 'blocks/default_block.html'
 

@@ -1,4 +1,23 @@
-<blockquote cite="{{ self.citation }}">
-    <p class="text">{{ self.text }}</p>
-    <p class="attribution">{{ self.attribution }}</p>
-</blockquote>
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <figure>
+            <blockquote class="blockquote" cite="{{ self.citation_text }}">
+                <p>{{ self.text }}</p>
+            </blockquote>
+            <figcaption class="blockquote-footer">
+                {% if self.citation_text %}
+                    {{ self.attribution }},
+                    <cite title="{{ self.citation_text }}">
+                        {% if self.citation_link %}
+                            <a href="{{ self.citation_link }}">{{ self.citation_text }}</a>
+                        {% else %}
+                            {{ self.citation_text }}
+                        {% endif %}
+                    </cite>
+                {% else %}
+                    {{ self.attribution }}
+                {% endif %}
+            </figcaption>
+        </blockquote>
+    </div>
+</div>

@@ -31,9 +31,6 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 INSTALLED_APPS = [
     'satchel.core',
-    'satchel.home',
-    'satchel.flex',
-    'satchel.form',
     'satchel.person',
     'satchel.blog',
     'satchel.project',
@@ -53,6 +50,14 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
+    'mathfilters',
+
+#    'django_extensions',
+
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'captcha',
+    'wagtailcaptcha',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -182,3 +187,9 @@ WAGTAILSEARCH_BACKENDS = {
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+
+# Django Crispy Forms Settings
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

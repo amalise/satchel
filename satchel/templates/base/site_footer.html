@@ -1,22 +1,55 @@
-<footer class="fixed-bottom border-top bg-light p-2">
-    <nav aria-label="Footer navigation">
-        <div class="container">
+{% load static wagtailcore_tags %}
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <span class="material-icons-outlined">email</span>Karl Mariger
-                    <span class="material-icons-outlined">copyright</span>2022
-                    <span class="material-icons-outlined">cookie</span>Cookies
-                </div>
-                
-                <div class="col-sm-6 col-md-offset-0 text-end">
-                    <a href="https://www.python.org/"><img src="https://www.python.org/static/community_logos/python-powered-w-70x28.png" height="20px" border="0" alt="Python powered." title="Python powered." /></a> 
-                    <a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangojoint107x25.gif" height="20px" border="0" alt="A Django joint." title="A Django joint." /></a>
-                    <a href="https://wagtail.org/"><img src="https://wagtail.org/static/img/wagtail.dbf60545a188.svg" height="20px" border="0" alt="A Wagtail site." title="A Wagtail site." /></a> 
-                    <a href="https://github.com/amalise/satchel"><img src="https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white" height="20px" border="0" alt="Github project." title="Github project." /></a>
-                </div>
+<footer class="container-fluid mt-auto bg-light border-top shadow-sm">
+    <div class="container">
+        <nav class="navbar navbar-expand navbar-light" style="padding: 0;" aria-label="Footer navigation">
+
+            <div class="me-0">
+                <span class="w-100 d-block d-md-none">
+                    <!-- hidden spacer to center on mobile --></span>
+                <a class="navbar-brand d-inline-block" href="/">
+                    <span class="material-icons-outlined">copyright</span>
+                    2022
+                </a>
             </div>
 
-        </div>
-    </nav>
+            <div class="ms-auto ms-md-0 me-0 me-md-auto">
+                <ul class="navbar-nav navbar-expand">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link menu-item">
+                            <span class="material-icons-outlined d-inline">email</span>
+                            <span class="d-none d-md-inline">Contact</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link menu-item">
+                            <span class="material-icons-outlined d-inline">cookie</span>
+                            <span class="d-none d-md-inline">Cookies</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="ms-auto d-none d-md-block">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="https://wagtail.org/" class="nav-link menu-item">
+                            <img src="https://wagtail.org/static/img/wagtail.dbf60545a188.svg" height="20px" border="0" alt="A Wagtail site." title="A Wagtail site." />
+                        </a> 
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://www.djangoproject.com/" class="nav-link menu-item">
+                            <img src="https://www.djangoproject.com/m/img/badges/djangojoint107x25.gif" height="20px" border="0" alt="A Django joint." title="A Django joint." />
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.python.org/" class="nav-link menu-item">
+                            <img src="https://www.python.org/static/community_logos/python-powered-w-70x28.png" height="20px" border="0" alt="Python powered." title="Python powered." />
+                        </a> 
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+    </div>
 </footer>

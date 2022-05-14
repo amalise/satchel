@@ -1,7 +1,9 @@
+"""
 from django.db import models
 
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.core.fields import RichTextField, StreamField
+from modelcluster.fields import ParentalKey
 
 from satchel.core.blocks import ContentStreamBlock
 
@@ -30,18 +32,19 @@ class FormPage(AbstractEmailForm):
         max_length = 200,
         blank = True,
         null = True,
-        help_text = 'Subtitle for page header.',
+        help_text = 'Subtitle for the page header.',
     )
-    banner_image = models.ForeignKey(
+    image = models.ForeignKey(
         'wagtailimages.Image',
         related_name = '+',
         blank = True,
         null = True,
+        help_text = 'Banner image for the page header.',
         on_delete = models.SET_NULL,
     )
     content = StreamField(
         ContentStreamBlock(),
-        verbose_name = 'Home content block',
+        verbose_name = 'Page content blocks.',
         blank = True
     )
     thank_you = RichTextField(
@@ -50,17 +53,20 @@ class FormPage(AbstractEmailForm):
     )
 
     content_panels = AbstractEmailForm.content_panels + [
-        FieldPanel('subtitle'),
-        ImageChooserPanel('banner_image'),
-        StreamFieldPanel('content', classname = 'full'),
+        MultiFieldPanel([
+            FieldPanel('subtitle'),
+            ImageChooserPanel('image'),
+        ], heading = 'Title section'),
+        StreamFieldPanel('content'),
         InlinePanel('form_fields', label = 'Form fields'),
-        FieldPanel('thank_you', classname = 'full')
+        FieldPanel('thank_you'),
         MultiFieldPanel([
             FieldRowPanel([
                 FieldPanel('from_address', classname = 'col6'),
                 FieldPanel('to_address', classname = 'col6'),
-            ])
+            ]),
             FieldPanel('subject'),
         ], 'Email'),
     ]
 
+"""

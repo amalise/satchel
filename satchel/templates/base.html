@@ -2,15 +2,19 @@
 
 {% include "base/head.html" %}
 
-{% block header %}
+{% block site_header %}
     {% include "base/site_header.html" %}
+{% endblock %}
+
+{% block page_header %}
+    {% include "include/page_header.html" %}
 {% endblock %}
 
 {% block base_content %}
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <main class="main">
+                <main class="main" aria-label="Main content">
                     {% block content %}{% endblock %}
                 </main>
             </div>
@@ -21,6 +25,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block page_footer %}
 {% endblock %}
 
 {% block footer %}

@@ -1,1 +1,7 @@
-<div>{{ self }}</div>
+{% load wagtailcore_tags %}
+
+<div class="row">
+    <div class="col">
+        {{ self.text|richtext }}
+    </div>
+</div>

@@ -1,29 +1,43 @@
-{% load wagtailcore_tags %}
+{% load static wagtailcore_tags %}
 {% wagtail_site as current_site %}
 
-<header class="bg-light border-bottom shadow-sm fixed-top">
-    <nav class="navbar navbar-expand-md navbar-light" aria-label="Main navigation">
-        <div class="container">
-
-            <a class="navbar-brand" style="margin-bottom: 3px;" href="/">{{ current_site.site_name }}</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
+<header class="container-fluid bg-primary bg-gradient border-bottom shadow-sm">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-primary" aria-label="Main navigation">
+            <div class="d-flex flex-grow-1">
+                <span class="w-100 d-lg-none d-block">
+                    <!-- hidden spacer to center brand on mobile --></span>
+                <a class="navbar-brand d-inline-block text-light" href="/">{{ current_site.site_name }}</a>
+                <div class="w-100 text-right">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon ms-auto"><span class="material-icons-outlined text-light">menu</span></span>
+                    </button>
+                </div>
+            </div>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto flex-nowrap">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Blog</a>
+                        <a href="#" class="nav-link m-2 menu-item text-light nav-active">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled">Portfolio</a>
+                        <a href="#" class="nav-link m-2 menu-item text-light">Portfolio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled">Experience</a>
+                        <a href="#" class="nav-link m-2 menu-item text-light">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link m-2 menu-item text-light">About</a>
                     </li>
                 </ul>
+                <form class="form-inline d-flex">
+                    <div class="input-group">
+                        <div class="form-outline">
+                            <input class="form-control me-2" id="search-text" type="search" placeholder="Search" aria-label="Search">
+                        </div>
+                        <button class="btn btn-secondary" type="submit"><span class="material-icons-outlined">search</span></button>
+                    </div>
+                </form>
             </div>
-
-        </div>
-    </nav>
+        </nav>
+    </div>
 </header>
