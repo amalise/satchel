@@ -1,0 +1,6 @@
+{% load wagtailcore_tags wagtailimages_tags blogapp_tags wagtailroutablepage_tags %}
+
+{% if blog_page %}
+    {% category_list %}
+    {% tag_list %}
+{% endif %}

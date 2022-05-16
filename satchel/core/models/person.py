@@ -8,15 +8,16 @@ from wagtail.admin.edit_handlers import (
     MultiFieldPanel,
     PageChooserPanel,
 )
-
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
-'''
 
 @register_snippet
 class Person(index.Indexed, ClusterableModel):
+    """
+    Django database model which defines a Person
+    """
     first_name = models.CharField('First name', max_length = 200)
     last_name = models.CharField('Last name', max_length = 200)
     job_title = models.CharField('Job title', max_length = 200)
@@ -30,15 +31,14 @@ class Person(index.Indexed, ClusterableModel):
     )
 
     panels = [
-        MultipleFieldPanel([
+        MultiFieldPanel([
             FieldRowPanel([
                 FieldPanel('first_name',  classname = 'col-6'),
-                FieldPanel('last_name',   classname = 'col-6'),
-
+                FieldPanel('last_name',   classname = 'col-6')
             ])
         ], "Name"),
         FieldPanel('job_title'),
-        ImageChooserPanel('image'),
+        ImageChooserPanel('image')
     ]
 
     search_fields = [
@@ -57,7 +57,6 @@ class Person(index.Indexed, ClusterableModel):
         return '{} {}'.format(self.first_name, self.last_name)
 
     class Meta:
-        verbose_name = 'Person'
-        verbose_name_plural = 'People'
+        verbose_name = 'person'
+        verbose_name_plural = 'people'
 
-'''

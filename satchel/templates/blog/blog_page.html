@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
+
+{% block page_header %}
+    {% include "include/page_header.html" %}
+{% endblock %}
+
+{% block sidebar %}
+    {% include "blog/side_nav.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="tags">
+        <h3>Tags</h3>
+        {% for tag in page.tags.all %}
+            <button class="btn btn-primary">{{ tag }}</button>
+        {% endfor %}
+    </div>
+    <div class="categories">
+        <h3>Categories</h3>
+        <ul>
+        {% for category in page.categories.all %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <a href="{{ page.get_parent.url }}">Return to blog</a>
+    </div>
+</div>
+
+<main class="container main">
+    <div class="row">
+        <div class="col">
+        {% for block in page.page_content %}
+            {% include_block block %}
+        {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

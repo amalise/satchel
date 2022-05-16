@@ -31,7 +31,6 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 INSTALLED_APPS = [
     'satchel.core',
-    'satchel.person',
     'satchel.blog',
     'satchel.project',
     'satchel.search',
@@ -47,6 +46,7 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
+    'wagtail.contrib.routable_page',
 
     'modelcluster',
     'taggit',

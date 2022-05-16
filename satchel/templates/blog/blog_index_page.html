@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags blogapp_tags %}
+
+{% block page_header %}
+    {% include "include/page_header.html" %}
+{% endblock %}
+
+{% block sidebar %}
+    {% include "blog/side_nav.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+    {% for block in page.page_content %}
+        {% include_block block %}
+    {% endfor %}
+    </div>
+</div>
+<div class="row">
+{% for post in posts %}
+    <div class="col-6">
+        <div class="card">
+        {% if post.image %}
+            {% image post.image fill-640x480 as img %}
+            <a href="{% pageurl post %}">
+                <img src="{{ img.url }}" class="card-img-top">
+            </a>
+        {% endif %}
+            <div class="card-body">
+                <h2 class="card-title">
+                    <a href="{% post_page_date_slug_url post blog_page %}">{{ post.title }}</a>
+                </h2>
+                <p class="card-text">
+                    {{ post.abstract|richtext }}
+                </p>
+                <a href="{% post_page_date_slug_url post blog_page %}" class="btn btn-primary">Read more &rarr;</a>
+            </div>
+            <div class="card-footer text-muted">
+                Posted on {{ post.date_published }}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+<hr />
+<ul class="pagination">
+{% if posts.has_previous %}
+    <li class="page-item">
+        <a href="?page={{ posts.previous_page_number }}" class="page-link bg-primary text-light">Previous</a>
+    </li>
+{% else %}
+    <li class="page-item disabled">
+        <a href="#" class="page-link">Previous</a>
+    </li>
+{% endif %}
+{% if posts.has_next %}
+    <li class="page-item">
+        <a href="?page={{ posts.next_page_number }}" class="page-link bg-primary text-light">Next</a>
+    </li>
+{% else %}
+    <li class="page-item disabled">
+        <a href="#" class="page-link">Next</a>
+    </li>
+{% endif %}
+</ul>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% load wagtailroutablepage_tags %}
+
+<div class="card my-4">
+    <h5 class="card-header bg-primary text-light">Tags</h5>
+    <div class="card-body">
+        {% for tag in tags %}
+            <a href='{% routablepageurl blog_page "post_by_tag" tag.slug %}'><span class="badge bg-secondary">{{ tag }}</span></a>
+        {% empty %}
+            No tags yet
+        {% endfor %}
+    </div>
+</div>
