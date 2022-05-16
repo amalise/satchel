@@ -18,6 +18,10 @@ from wagtail.core.blocks import (
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 
+from wagtailcodeblock.blocks import CodeBlock
+
+from wagtailmath.blocks import MathBlock
+
 
 class HeadingBlock(StructBlock):
     text = CharBlock(required = True)
@@ -37,7 +41,15 @@ class HeadingBlock(StructBlock):
 
 
 class ParagraphBlock(StructBlock):
-    text = RichTextBlock(required = True)
+    text = RichTextBlock(
+        features = [
+            'h1', 'h2', 'h3', 'h4', 'h5',
+            'bold', 'italic',
+            'ol', 'ul', 'hr',
+            'link', 'image', 'code', 'blockquote'
+        ],
+        required = True
+    )
 
     class Meta:
         icon = 'pilcrow'
@@ -71,6 +83,8 @@ class ContentStreamBlock(StreamBlock):
     paragraph = ParagraphBlock()
     image = ImageBlock()
     quote = QuoteBlock()
+    code = CodeBlock()
+    equation = MathBlock()
     embed = EmbedBlock(
         icon = 'view',
         template = 'blocks/default_block.html',

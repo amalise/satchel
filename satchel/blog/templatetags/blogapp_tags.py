@@ -8,6 +8,23 @@ from satchel.core.models import Category, Tag
 register = Library()
 
 
+
+@register.inclusion_tag('blog/tags/table_of_contents.html', takes_context = True)
+def table_of_contents(context):
+    return {
+        'request': context['request'],
+        'blog_page': context['blog_page'],
+        'post_page': context['post_page']
+    }
+    
+@register.inclusion_tag('blog/tags/summary_content.html', takes_context = True)
+def summary_content(context):
+    return {
+        'request': context['request'],
+        'blog_page': context['blog_page'],
+        'post_page': context['post_page']
+    }
+    
 @register.inclusion_tag('blog/tags/category_list.html', takes_context = True)
 def category_list(context):
     categories = Category.objects.all()

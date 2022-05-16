@@ -123,6 +123,7 @@ class BlogPage(FlexPage):
     ]
 
     content_panels  = FlexPage.content_panels
+    gallery_panels  = FlexPage.gallery_panels
     meta_panels     = FlexPage.meta_panels
     promote_panels  = FlexPage.promote_panels
     settings_panels = FlexPage.settings_panels
@@ -130,6 +131,7 @@ class BlogPage(FlexPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels,  heading = 'Content'),
         ObjectList(post_panels,     heading = 'Post'),
+        ObjectList(gallery_panels,  heading = 'Gallery'),
         ObjectList(meta_panels,     heading = 'Meta'),
         ObjectList(promote_panels,  heading = 'Promote'),
         ObjectList(settings_panels, heading = 'Settings')
@@ -141,6 +143,7 @@ class BlogPage(FlexPage):
     def get_context(self, request):
         context = super().get_context(request)
         context['blog_page'] = self.get_parent().specific
+        context['post_page'] = self
         return context
 
     def authors(self):

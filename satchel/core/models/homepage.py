@@ -11,6 +11,8 @@ from wagtail.admin.edit_handlers import (
 
 from satchel.core.blocks import PageStreamBlock
 from satchel.core.models import FlexPage
+#from satchel.project.models import ProjectPage
+from satchel.blog.models import BlogPage
 
 
 class HomePage(FlexPage):
@@ -55,6 +57,7 @@ class HomePage(FlexPage):
     ]
 
     content_panels  = FlexPage.content_panels
+    gallery_panels  = FlexPage.gallery_panels
     meta_panels     = FlexPage.meta_panels
     promote_panels  = FlexPage.promote_panels
     settings_panels = FlexPage.settings_panels
@@ -62,6 +65,7 @@ class HomePage(FlexPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels,  heading = 'Content'),
         ObjectList(feature_panels,  heading = 'Featured'),
+        ObjectList(gallery_panels,  heading = 'Gallery'),
         ObjectList(meta_panels,     heading = 'Meta'),
         ObjectList(promote_panels,  heading = 'Promote'),
         ObjectList(settings_panels, heading = 'Settings')

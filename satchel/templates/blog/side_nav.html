@@ -1,6 +1,24 @@
 {% load wagtailcore_tags wagtailimages_tags blogapp_tags wagtailroutablepage_tags %}
 
 {% if blog_page %}
-    {% category_list %}
-    {% tag_list %}
+    <div class="card my-4">
+        <h5 class="card-header bg-primary text-light">Search</h5>
+        <div class="card-body">
+            <form role="search" method="get" action='{% routablepageurl blog_page "post_search" %}'>
+                <div class="input-group">
+                    <input class="form-control search-query" name="q" type="text" placeholder="Search&hellip;" aria-label="Search">
+                    <button class="btn btn-secondary" type="submit"><span class="material-icons-outlined">search</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if post_page %}
+        {% table_of_contents %}
+        {% summary_content %}
+    {% else %}
+        {% category_list %}
+        {% tag_list %}
+    {% endif %}
+
 {% endif %}

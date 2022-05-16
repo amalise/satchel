@@ -58,41 +58,38 @@ class BlogIndexPage(RoutablePageMixin, FlexPage):
         tags = sorted(set(tags))
         return tags
 
-    @route(r'^tag/(?P<tag>[-\w]+)/$')
-    def post_by_tag(self, request, tag):
-        try:
-            tag = Tag.objects.get(slug = tag)
-        except Tag.DoesNotExist:
-            if tag:
-                msg = 'There are no blog posts tagged with "{}".'.format(tag)
-                messages.add_message(request, messages.INFO, msg)
-        self.posts = self.get_posts().filter(tags = tag)
-        return self.render(request, context_overrides = { 'tag': tag })
-
-    @route(r'^category/(?P<category>[-\w]+)/$')
-    def post_by_category(self, request, category):
-        try:
-            category = Category.objects.get(slug = category)
-        except Category.DoesNotExist:
-            if tag:
-                msg = 'There are no blog posts categorized in "{}".'.format(category)
-                messages.add_message(request, messages.INFO, msg)
-        self.posts = self.get_posts().filter(blog_category_relationship__category = category)
-        return self.render(request, context_overrides = { 'category': category })
-
     @route(r'^$')
     def post_list(self, request):
         self.posts = self.get_posts()
+        return self.render(request)
+
+    @route(r'^tag/(?P<tag>[-\w]+)/$')
+    def post_by_tag(self, request, tag):
+        self.search_type = 'tag'
+        self.search_term = tag
+        self.posts = self.get_posts().filter(tags__slug = tag)
+        return self.render(request)
+
+    @route(r'^category/(?P<category>[-\w]+)/$')
+    def post_by_category(self, request, category):
+        self.search_type = 'category'
+        self.search_term = category
+        self.posts = self.get_posts().filter(blog_category_relationship__category__slug = category)
         return self.render(request)
 
     @route(r'^(\d{4})/$')
     @route(r'^(\d{4})/(\d{2})/$')
     @route(r'^(\d{4})/(\d{2})/(\d{2})/$')
     def post_by_date(self, request, year, month = None, day = None):
+        self.search_type = 'date'
+        self.search_term = year
         self.posts = self.get_posts().filter(date_published__year = year)
         if month:
+            df = DateFormat(datetime.date(int(year), int(month), 1))
+            self.search_term = df.format('F Y')
             self.posts = self.posts.filter(date_published__month = month)
         if day:
+            self.search_term = date_format(datetime.date(int(year), int(month), int(day)))
             self.posts = self.posts.filter(date_published__day = day)
         return self.render(request)
 
@@ -102,4 +99,14 @@ class BlogIndexPage(RoutablePageMixin, FlexPage):
         if not post_page:
             raise Http404
         return post_page.serve(request)
+
+    @route(r'^search/$')
+    def post_search(self, request):
+        search_query = request.GET.get('q', None)
+        self.posts = self.get_posts()
+        if search_query:
+            self.search_type = 'search'
+            self.search_term = search_query
+            self.posts = self.posts.search(search_query)
+        return self.render(request)
 

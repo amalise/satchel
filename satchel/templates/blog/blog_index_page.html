@@ -12,14 +12,20 @@
 {% block content %}
 <div class="row">
     <div class="col">
-    {% for block in page.page_content %}
-        {% include_block block %}
-    {% endfor %}
+        {% if page.search_term %}
+            <div class="alert alert-success">
+                Blog posts matching <strong>{{ page.search_type }}: {{ page.search_term }}</strong>
+            </div>
+        {% else %}
+            {% for block in page.page_content %}
+                {% include_block block %}
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 <div class="row">
 {% for post in posts %}
-    <div class="col-6">
+    <div class="col-12">
         <div class="card">
         {% if post.image %}
             {% image post.image fill-640x480 as img %}

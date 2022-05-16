@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     'satchel.core',
     'satchel.blog',
     'satchel.project',
-    'satchel.search',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -51,6 +50,8 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'mathfilters',
+    'wagtailcodeblock',
+    'wagtailmath',
 
 #    'django_extensions',
 
@@ -193,3 +194,52 @@ BASE_URL = 'http://example.com'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+
+# Wagtail Code Block Settings
+
+WAGTAIL_CODE_BLOCK_LINE_NUMBERS = True
+WAGTAIL_CODE_BLOCK_THEME = None
+WAGTAIL_CODE_BLOCK_LANGUAGES = (
+# Default
+    ('bash', 'Bash/Shell'),
+    ('css', 'CSS'),
+    ('html', 'HTML'),
+    ('javascript', 'JavaScript'),
+    ('json', 'JSON'),
+    ('python', 'Python'),
+    ('sql', 'SQL'),
+    ('yaml', 'YAML'),
+# Added
+    ('arduino', 'Arduino'),
+    ('autohotkey', 'AutoHotkey'),
+    ('c', 'C'),
+    ('csharp', 'C#'),
+    ('cpp', 'C++'),
+    ('diff', 'Diff'),
+    ('django', 'Django/Jinja2'),
+    ('java', 'Java'),
+    ('javadoc', 'JavaDoc'),
+    ('latex', 'LaTeX'),
+    ('less', 'Less'),
+    ('lua', 'Lua'),
+    ('makefile', 'Makefile'),
+    ('markdown', 'Markdown'),
+    ('matlab', 'MATLAB'),
+    ('nginx', 'nginx'),
+    ('pascal', 'Pascal + Object Pascal'),
+    ('php', 'PHP'),
+    ('phpdoc', 'PHPDoc'),
+    ('r', 'R'),
+    ('regex', 'Regex'),
+    ('rest', 'reST (reStructuredText)'),
+    ('ruby', 'Ruby'),
+    ('rust', 'Rust'),
+    ('sas', 'SAS'),
+    ('sass', 'Sass (Sass)'),
+    ('scss', 'Sass (Scss)'),
+    ('tcl', 'Tcl'),
+    ('typescript', 'TypeScript'),
+    ('vim', 'vim'),
+    ('wiki', 'Wiki markup'),
+)

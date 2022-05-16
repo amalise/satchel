@@ -5,6 +5,7 @@ from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,
+    InlinePanel,
     ObjectList,
     StreamFieldPanel,
     TabbedInterface,
@@ -82,11 +83,16 @@ class FlexPage(Page):
         ], heading = 'Banner content'),
     ]
 
+    gallery_panels = [
+        InlinePanel('gallery_images', label = 'Gallery images'),
+    ]
+
     promote_panels  = Page.promote_panels
     settings_panels = Page.settings_panels
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels,  heading = 'Content'),
+        ObjectList(gallery_panels,  heading = 'Gallery'),
         ObjectList(meta_panels,     heading = 'Meta'),
         ObjectList(promote_panels,  heading = 'Promote'),
         ObjectList(settings_panels, heading = 'Settings')
