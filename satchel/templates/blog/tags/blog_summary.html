@@ -1,0 +1,50 @@
+{% load wagtailroutablepage_tags %}
+
+{% if blog_page %}
+<div class="card my-4">
+    <h5 class="card-header bg-primary bg-gradient text-light">About the Article</h5>
+    <div class="card-body">
+        <h4 class="card-title">{{ blog_page.title }}</h4>
+        <p class="card-text">
+            <strong>Posted on: </strong>{{ blog_page.date_published }}<br />
+            <strong>By: </strong>
+        {% for author in blog_page.authors %}
+            {% if not forloop.first %}{% if forloop.last %}, and {% else %}, {% endif %}{% endif %}
+            {{ author }}
+        {% endfor %}
+        </p>
+        {% if blog_page.projects %}
+            <p class="card-text">
+                <strong>Posted in: </strong>{% if blog_page.projects.count > 1 %}<br />{% endif %}
+                {% for project in blog_page.projects %}
+                    {% if not forloop.first %}{% if forloop.last %}, and<br />{% else %},<br />{% endif %}{% endif %}
+                    <a href="{{ project.canonical_url }}">{{ project }}</a>
+                {% endfor %}
+            </p>
+        {% endif %}
+        <p class="card-text">
+        {% for category in blog_page.categories %}
+            <a href='{% routablepageurl index_page "blog_by_category" category.slug %}'><span class="badge bg-primary">{{ category }}</span></a>
+        {% endfor %}
+        {% for tag in blog_page.tags.all %}
+            <a href='{% routablepageurl index_page "blog_by_tag" tag.slug %}'><span class="badge bg-info">{{ tag }}</span></a>
+        {% endfor %}
+        </p>
+        {% if blog_page.next_blogs %}
+            <p class="card-text">
+                <strong>Next: </strong>{% if blog_page.next_blogs.count > 1 %}<br />{% endif %}
+                {% for blog in blog_page.next_blogs %}
+                    {% if not forloop.first %}{% if forloop.last %}, and<br />{% else %},<br />{% endif %}{% endif %}
+                    <a href="{{ blog.canonical_url }}">{{ blog.title }}</a>
+                {% endfor %}
+            </p>
+        {% endif %}
+        {% if blog_page.previous_blog %}
+            <p class="card-text">
+                <strong>Previous: </strong>
+                <a href="{{ blog_page.previous_blog.canonical_url }}">{{ blog_page.previous_blog.title }}</a>
+            </p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}

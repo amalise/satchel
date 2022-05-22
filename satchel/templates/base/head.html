@@ -5,13 +5,16 @@
     <head>
         <meta charset="utf-8" />
         <title>
+            {% block title_prefix %}
+            {% endblock %}
             {% block title %}
                 {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
             {% endblock %}
             {% block title_suffix %}
-                {% if wagtail_site and wagtail_site.site_name %}- {{ wagtail_site.site_name }}{% endif %}
+                - Karl Mariger
             {% endblock %}
         </title>
+        <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
         <meta name="description" content="{% if self.search_description %}{{ self.search_description }}{% endif %}" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -27,5 +30,5 @@
         {% block extra_css %}
         {% endblock %}
     </head>
-    <body class="{% block body_class %}d-flex flex-column min-vh-100{% endblock %}">
+    <body class="{% block body_class %}d-flex flex-column min-vh-100{% endblock %}" data-bs-spy="scroll" data-bs-target="nav_toc">
         {% wagtailuserbar %}

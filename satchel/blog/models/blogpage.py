@@ -20,6 +20,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.models import Orderable
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
+from wagtail.admin.edit_handlers import PageChooserPanel
 
 from satchel.core.models import FlexPage
 
@@ -28,7 +29,7 @@ class BlogPersonRelationship(Orderable, models.Model):
     """
     Database table to store BlogPage <-> Person data
     """
-    page = ParentalKey(
+    blog = ParentalKey(
         'BlogPage',
         related_name = 'blog_person_relationship',
         on_delete = models.CASCADE,
@@ -44,14 +45,37 @@ class BlogPersonRelationship(Orderable, models.Model):
     ]
 
     class Meta:
-        unique_together = ('page', 'person')
+        unique_together = ('blog', 'person')
+
+
+class BlogProjectRelationship(Orderable, models.Model):
+    """
+    Database table to store BlogPage <-> Project data
+    """
+    blog = ParentalKey(
+        'BlogPage',
+        related_name = 'blog_project_relationship',
+        on_delete = models.CASCADE,
+    )
+    project = models.ForeignKey(
+        'project.ProjectPage',
+        related_name = 'project_blog_relationship',
+        on_delete = models.CASCADE,
+    )
+
+    panels = [
+        PageChooserPanel('project', 'project.ProjectPage')
+    ]
+
+    class Meta:
+        unique_together = ('blog', 'project')
 
 
 class BlogCategoryRelationship(Orderable, models.Model):
     """
     Database table to store BlogPage <-> Category data
     """
-    page = ParentalKey(
+    blog = ParentalKey(
         'BlogPage',
         related_name = 'blog_category_relationship',
         on_delete = models.CASCADE,
@@ -67,7 +91,7 @@ class BlogCategoryRelationship(Orderable, models.Model):
     ]
 
     class Meta:
-        unique_together = ('page', 'category')
+        unique_together = ('blog', 'category')
 
 
 
@@ -93,17 +117,24 @@ class BlogPage(FlexPage):
         - tags
     """
     date_published = models.DateField(
-        "Data published",
         blank = True,
         null = True,
-        default = datetime.today
+        default = datetime.today,
+        help_text = 'Date blog post published.'
     )
     tags = ClusterTaggableManager(
         through = BlogTagRelationship,
         blank = True
     )
+    previous_blog = models.ForeignKey(
+        'self',
+        blank = True,
+        null = True,
+        on_delete = models.SET_NULL,
+        help_text = 'Previous blog post.'
+    )
 
-    post_panels = [
+    blog_panels = [
         MultiFieldPanel([
             InlinePanel(
                 'blog_person_relationship',
@@ -114,9 +145,15 @@ class BlogPage(FlexPage):
         ], heading = 'Publication'),
         MultiFieldPanel([
             InlinePanel(
+                'blog_project_relationship',
+                label = 'projects',
+            ),
+            PageChooserPanel('previous_blog', 'blog.BlogPage'),
+        ], heading = 'Relationships'),
+        MultiFieldPanel([
+            InlinePanel(
                 'blog_category_relationship',
                 label = 'categories',
-                min_num = 1,
             ),
             FieldPanel('tags'),
         ], heading = 'Filing'),
@@ -130,7 +167,7 @@ class BlogPage(FlexPage):
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels,  heading = 'Content'),
-        ObjectList(post_panels,     heading = 'Post'),
+        ObjectList(blog_panels,     heading = 'Blog'),
         ObjectList(gallery_panels,  heading = 'Gallery'),
         ObjectList(meta_panels,     heading = 'Meta'),
         ObjectList(promote_panels,  heading = 'Promote'),
@@ -142,8 +179,8 @@ class BlogPage(FlexPage):
 
     def get_context(self, request):
         context = super().get_context(request)
-        context['blog_page'] = self.get_parent().specific
-        context['post_page'] = self
+        context['index_page'] = self.get_parent().specific
+        context['blog_page'] = self
         return context
 
     def authors(self):
@@ -152,10 +189,26 @@ class BlogPage(FlexPage):
         ]
         return authors
 
+    def projects(self):
+        projects = [
+            n.project for n in self.blog_project_relationship.all()
+        ]
+        return projects
+
     def categories(self):
         categories = [
             n.category for n in self.blog_category_relationship.all()
         ]
+        return categories
+
+    def get_categories(self):
+        categories = self.categories()
+        for category in categories:
+            category.url = '/' + '/'.join(s.strip('/') for s in [
+                self.get_parent().url,
+                'categories',
+                category.slug
+            ])
         return categories
 
     def get_tags(self):
@@ -168,14 +221,17 @@ class BlogPage(FlexPage):
             ])
         return tags
 
+    def next_blogs(self):
+        blogs = BlogPage.objects.all().live().filter(previous_blog = self)
+        return blogs
+
     @cached_property
     def blog_page(self):
         return self.get_parent().specific
 
     @cached_property
     def canonical_url(self):
-        from satchel.blog.templatetags.blogapp_tags import post_page_date_slug_url
+        from satchel.blog.templatetags.blog_tags import blog_date_slug_url
 
-        blog_page = self.blog_page
-        return post_page_date_slug_url(self, blog_page)
+        return blog_date_slug_url(self, self.get_parent().specific)
 

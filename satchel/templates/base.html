@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailuserbar %}
+{% load static wagtailcore_tags %}
 
 {% include "base/head.html" %}
 
@@ -19,7 +19,7 @@
             </main>
         </div>
         <div class="col-md-4">
-            <nav aria-label="Side navigation">
+            <nav aria-label="Side navigation" class="sticky-md-top">
                 {% block sidebar %}{% endblock %}
             </nav>
         </div>

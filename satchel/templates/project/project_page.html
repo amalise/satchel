@@ -6,19 +6,24 @@
 {% endblock %}
 
 {% block sidebar %}
-    {% include "blog/side_nav.html" %}
+    {% include "project/side_nav.html" %}
 {% endblock %}
 
 {% block content %}
+
+<!--
+    Table of Contents
+    https://docs.wagtail.org/en/latest/topics/streamfield.html?highlight=streamfield#template-rendering
+-->
 <main class="container main">
     <div class="row">
         <div class="col">
-        {% for block in blog_page.page_content %}
+        {% for block in project_page.page_content %}
             {% include_block block %}
         {% endfor %}
         </div>
     </div>
-    {% if blog_page.gallery.count > 0 %}
+    {% if project_page.gallery.count > 0 %}
         <div class="row">
             <a id="image-gallery"></a>
             <h2 class="text-primary">Image Gallery</h2>
@@ -26,4 +31,6 @@
         </div>
     {% endif %}
 </main>
+
+
 {% endblock %}

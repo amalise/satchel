@@ -67,14 +67,14 @@ class FlexPage(Page):
     )
 
     content_panels = [
-        FieldPanel('title'),
         StreamFieldPanel('page_content'),
     ]
 
     meta_panels = [
         MultiFieldPanel([
-            ImageChooserPanel('image'),
+            FieldPanel('title'),
             FieldPanel('abstract'),
+            ImageChooserPanel('image'),
         ], heading = 'Site navigation'),
         MultiFieldPanel([
             FieldPanel('banner_title'),

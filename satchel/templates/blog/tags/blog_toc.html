@@ -1,0 +1,28 @@
+{% load wagtailcore_tags %}
+
+{% if blog_page %}
+<div class="card mb-4">
+    <h5 class="card-header bg-primary bg-gradient text-light">On This Page</h5>
+    <div class="card-body p-0">
+        <div id="nav_toc" class="list-group list-group-flush">
+        {% for block in blog_page.page_content %}
+            {% if block.block_type == 'heading' %}
+                <a class="list-group-item list-group-item-primary list-group-item-action"
+                   href="#{{ block.value.text|slugify }}"
+                   {%   if block.value.size == 'h3' %}style="text-indent: .5em;"
+                   {% elif block.value.size == 'h4' %}style="text-indent: 1em;"
+                   {% elif block.value.size == 'h5' %}style="text-indent: 1.5em;"
+                   {% elif block.value.size == 'h6' %}style="text-indent: 2em;"
+                   {% elif block.value.size == 'h7' %}style="text-indent: 2.5em;"
+                   {% endif %}
+                   >{{ block.value.text }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if blog_page.gallery.count > 0 %}
+            <a class="list-group-item list-group-item-primary list-group-item-action"
+               href="#image-gallery">Image Gallery</a>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}

@@ -4,7 +4,7 @@
     <h5 class="card-header bg-primary bg-gradient text-light">Tags</h5>
     <div class="card-body">
         {% for tag in tags %}
-            <a href='{% routablepageurl index_page "blog_by_tag" tag.slug %}'><span class="badge bg-info">{{ tag }}</span></a>
+            <a href='{% routablepageurl index_page "project_by_tag" tag.slug %}'><span class="badge bg-info">{{ tag }}</span></a>
         {% empty %}
             No tags yet
         {% endfor %}

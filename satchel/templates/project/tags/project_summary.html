@@ -1,0 +1,46 @@
+{% load wagtailroutablepage_tags %}
+
+<div class="card my-4">
+    <h5 class="card-header bg-primary bg-gradient text-light">About the Project</h5>
+    <div class="card-body">
+        <h4 class="card-title">{{ project_page.title }}</h4>
+        <p class="card-text">
+            <strong>Created on: </strong>{{ project_page.date_created }}<br />
+            <strong>Updated on: </strong>{{ project_page.date_updated }}<br />
+            <strong>Collaborators: </strong>
+            {% for collaborator in project_page.collaborators %}
+                {% if not forloop.first %}{% if forloop.last %}, and {% else %}, {% endif %}{% endif %}
+                {{ collaborator }}
+            {% endfor %}
+        </p>
+        <p class="card-text">
+        {% for category in project_page.categories %}
+            <a href='{% routablepageurl index_page "project_by_category" category.slug %}'><span class="badge bg-primary">{{ category }}</span></a>
+        {% endfor %}
+        {% for tag in project_page.tags.all %}
+            <a href='{% routablepageurl index_page "project_by_tag" tag.slug %}'><span class="badge bg-info">{{ tag }}</span></a>
+        {% endfor %}
+        </p>
+        {%   if project_page.status == "idle" %}
+            <div class="p-3 rounded text-center bg-warning bg-gradient text-light" style="font-size: 1.75em; font-weight: bold;">
+                {{ project_page.get_status_display }}
+            </div>
+        {% elif project_page.status == "complete" %}
+            <div class="p-3 rounded text-center bg-dark bg-gradient text-light" style="font-size: 1.75em; font-weight: bold;">
+                {{ project_page.get_status_display }}
+            </div>
+        {% elif project_page.status == "archive" %}
+            <div class="p-3 rounded text-center bg-dark bg-gradient text-muted" style="font-size: 1.75em; font-weight: bold;">
+                {{ project_page.get_status_display }}
+            </div>
+        {% elif project_page.status == "abandon" %}
+            <div class="p-3 rounded text-center bg-danger bg-gradient text-light" style="font-size: 1.75em; font-weight: bold;">
+                {{ project_page.get_status_display }}
+            </div>
+        {% else %}
+            <div class="p-3 rounded text-center bg-success bg-gradient text-light" style="font-size: 1.75em; font-weight: bold;">
+                {{ project_page.get_status_display }}
+            </div>
+        {% endif %}
+    </div>
+</div>

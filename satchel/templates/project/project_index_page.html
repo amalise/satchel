@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags project_tags %}
+
+{% block page_header %}
+    {% include "include/page_header.html" %}
+{% endblock %}
+
+{% block sidebar %}
+    {% include "project/side_nav.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        {% if index_page.search_term %}
+            <div class="alert alert-success">
+                Project pages matching <strong>{{ index_page.search_type }}: {{ index_page.search_term }}</strong>
+            </div>
+        {% else %}
+            {% for block in project_page.page_content %}
+                {% include_block block %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+{% for project in projects %}
+    <div class="col-12 {% if forloop.first %}mb-2{% else %}my-2{% endif %}">
+        <div class="card">
+        {% if project.image %}
+            {% image project.image fill-640x480 as img %}
+            <a href="{% pageurl project %}">
+                <img src="{{ img.url }}" class="card-img-top">
+            </a>
+        {% endif %}
+            <div class="card-body">
+                <h2 class="card-title">
+                    <a class="text-decoration-none" href="{% project_date_slug_url project index_page %}">{{ project.title }}</a>
+                </h2>
+                {% if project.categories %}
+                    {% for category in project.categories %}
+                        <a href='{% routablepageurl index_page "project_by_category" category.slug %}'><span class="badge bg-primary">{{ category }}</span></a>
+                    {% endfor %}
+                {% endif %}
+                {% if project.tags %}
+                    {% for tag in project.tags.all %}
+                        <a href='{% routablepageurl index_page "project_by_tag" tag.slug %}'><span class="badge bg-info">{{ tag }}</span></a>
+                    {% endfor %}
+                {% endif %}
+                <p class="card-text">
+                    {{ post.abstract|richtext }}
+                </p>
+                <p class="card-text">
+                    <a href="{% project_date_slug_url project index_page %}" class="btn btn-secondary">Read more &rarr;</a>
+                </p>
+            </div>
+            <div class="card-footer text-muted">
+                <strong>Created on: </strong>{{ project.date_created }} &nbsp; &nbsp;<br class="d-lg-none" />
+                <strong>Updated on: </strong>{{ project.date_updated }} &nbsp; &nbsp;<br class="d-lg-none" />
+                <strong>Status: </strong>{{ project.get_status_display }}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+<hr />
+<!--
+    Pagination with limited numbers
+    https://docs.djangoproject.com/en/4.0/ref/paginator/#django.core.paginator.Paginator.get_elided_page_range
+    https://nemecek.be/blog/105/how-to-use-elided-pagination-in-django-and-solve-too-many-pages-problem
+-->
+<ul class="pagination">
+{% if projects.has_previous %}
+    <li class="page-item">
+        <a href="?page={{ projects.previous_page_number }}" class="page-link bg-primary text-light">Previous</a>
+    </li>
+{% else %}
+    <li class="page-item disabled">
+        <a href="#" class="page-link">Previous</a>
+    </li>
+{% endif %}
+{% if projects.has_next %}
+    <li class="page-item">
+        <a href="?page={{ projects.next_page_number }}" class="page-link bg-primary text-light">Next</a>
+    </li>
+{% else %}
+    <li class="page-item disabled">
+        <a href="#" class="page-link">Next</a>
+    </li>
+{% endif %}
+</ul>
+{% endblock %}

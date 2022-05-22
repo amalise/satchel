@@ -1,0 +1,13 @@
+{% load wagtailcore_tags wagtailroutablepage_tags %}
+
+<div class="card mb-4">
+    <h5 class="card-header bg-primary bg-gradient text-light">Search</h5>
+    <div class="card-body">
+        <form role="search" method="get" action='{% routablepageurl index_page "project_search" %}'>
+            <div class="input-group">
+                <input class="form-control search-query" name="q" type="text" placeholder="Search&hellip;" aria-label="Search">
+                <button class="btn btn-secondary" type="submit"><span class="material-icons-outlined">search</span></button>
+            </div>
+        </form>
+    </div>
+</div>

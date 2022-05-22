@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags blogapp_tags %}
+{% load wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags blog_tags %}
 
 {% block page_header %}
     {% include "include/page_header.html" %}
@@ -24,45 +24,73 @@
     </div>
 </div>
 <div class="row">
-{% for post in posts %}
-    <div class="col-12">
+{% for blog in blogs %}
+    <div class="col-12 {% if forloop.first %}mb-2{% else %}my-2{% endif %}">
         <div class="card">
-        {% if post.image %}
-            {% image post.image fill-640x480 as img %}
-            <a href="{% pageurl post %}">
+        {% if blog.image %}
+            {% image blog.image fill-640x480 as img %}
+            <a href="{% pageurl blog %}">
                 <img src="{{ img.url }}" class="card-img-top">
             </a>
         {% endif %}
             <div class="card-body">
                 <h2 class="card-title">
-                    <a href="{% post_page_date_slug_url post blog_page %}">{{ post.title }}</a>
+                    <a class="text-decoration-none" href="{% blog_date_slug_url blog index_page %}">{{ blog.title }}</a>
                 </h2>
+                {% if blog.categories %}
+                    {% for category in blog.categories %}
+                        <a href='{% routablepageurl index_page "blog_by_category" category.slug %}'><span class="badge bg-primary">{{ category }}</span></a>
+                    {% endfor %}
+                {% endif %}
+                {% if blog.tags %}
+                    {% for tag in blog.tags.all %}
+                        <a href='{% routablepageurl index_page "blog_by_tag" tag.slug %}'><span class="badge bg-info">{{ tag }}</span></a>
+                    {% endfor %}
+                {% endif %}
                 <p class="card-text">
-                    {{ post.abstract|richtext }}
+                    {{ blog.abstract|richtext }}
                 </p>
-                <a href="{% post_page_date_slug_url post blog_page %}" class="btn btn-primary">Read more &rarr;</a>
+                <p class="card-text">
+                    <a href="{% blog_date_slug_url blog index_page %}" class="btn btn-secondary text-light">Read more &rarr;</a>
+                </p>
+                {% if blog.previous_blog %}
+                    <p class="card-text">
+                        <strong>Previous: </strong>
+                        <a href="{{ blog.previous_blog.canonical_url }}">{{ blog.previous_blog.title }}</a>
+                    </p>
+                {% endif %}
             </div>
             <div class="card-footer text-muted">
-                Posted on {{ post.date_published }}
+                <strong>Posted on: </strong>{{ blog.date_published }}
+                <strong>By: </strong>
+                {% for author in blog.authors %}
+                    {% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %}
+                    {{ author }}
+                {% endfor %}
             </div>
         </div>
     </div>
 {% endfor %}
 </div>
-<hr />
-<ul class="pagination">
-{% if posts.has_previous %}
+
+<!--
+    Pagination with limited numbers
+    https://docs.djangoproject.com/en/4.0/ref/paginator/#django.core.paginator.Paginator.get_elided_page_range
+    https://nemecek.be/blog/105/how-to-use-elided-pagination-in-django-and-solve-too-many-pages-problem
+-->
+<ul class="pagination my-4">
+{% if blogs.has_previous %}
     <li class="page-item">
-        <a href="?page={{ posts.previous_page_number }}" class="page-link bg-primary text-light">Previous</a>
+        <a href="?page={{ blogs.previous_page_number }}" class="page-link bg-primary text-light">Previous</a>
     </li>
 {% else %}
     <li class="page-item disabled">
         <a href="#" class="page-link">Previous</a>
     </li>
 {% endif %}
-{% if posts.has_next %}
+{% if blogs.has_next %}
     <li class="page-item">
-        <a href="?page={{ posts.next_page_number }}" class="page-link bg-primary text-light">Next</a>
+        <a href="?page={{ blogs.next_page_number }}" class="page-link bg-primary text-light">Next</a>
     </li>
 {% else %}
     <li class="page-item disabled">

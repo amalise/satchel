@@ -4,7 +4,7 @@
     <h5 class="card-header bg-primary bg-gradient text-light">Categories</h5>
     <div class="card-body">
         {% for category in categories %}
-            <a href='{% routablepageurl index_page "blog_by_category" category.slug %}'><span class="badge bg-primary">{{ category }}</span></a>
+            <a href='{% routablepageurl index_page "project_by_category" category.slug %}'><span class="badge bg-primary">{{ category }}</span></a>
         {% empty %}
             No categories yet
         {% endfor %}

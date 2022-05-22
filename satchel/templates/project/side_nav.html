@@ -1,0 +1,15 @@
+{% load wagtailcore_tags wagtailimages_tags project_tags wagtailroutablepage_tags %}
+
+{% if index_page %}
+    {% if project_page %}
+        {% project_toc %}
+        {% project_summary %}
+        {% blog_list %}
+    {% endif %}
+    {% project_search %}
+    {% if not project_page %}
+        {% category_list %}
+        {% tag_list %}
+    {% endif %}
+
+{% endif %}
